@@ -1,5 +1,5 @@
 # Exercise 1, 2 and 3 Pipeline Implemented
-Complete Exercise 1 steps. Pipeline for filtering and RANSAC plane fitting implemented.
+## Complete Exercise 1 steps. Pipeline for filtering and RANSAC plane fitting implemented.
 
 The simulator runs a camera and its information is published in ros. In order to handle this information it is necessary to convert it to PCL
 
@@ -15,7 +15,7 @@ In the PCL library it is implemented the RANSAC filter. The table is considered 
 
 This extract the plane (table) from the objects (outliers). 
 
-Complete Exercise 2 steps: Pipeline including clustering for segmentation implemented.
+## Complete Exercise 2 steps: Pipeline including clustering for segmentation implemented.
 
 With the separation between objects and table, it is necessary to separate them into clusters.
 
@@ -33,7 +33,7 @@ This algorithm only supports k-d tree for nearest neighbor search. Cluster_indic
 the point clouds obtained are converted from PCL to ROS and published.
 
 
-Complete Exercise 3 Steps. Features extracted and SVM trained. Object recognition implemented.
+## Complete Exercise 3 Steps. Features extracted and SVM trained. Object recognition implemented.
 
 
 
@@ -48,7 +48,7 @@ With the data of the objects it is necessary to train it through the SVM (Suppor
 With an accuracy over 90% in the three different “worlds” of the simulation.
 
 
-Pick and Place Setup
+# Pick and Place Setup
 
 
 
