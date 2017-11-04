@@ -103,6 +103,40 @@ the point clouds obtained are converted from PCL to ROS and published.
 ## Complete Exercise 3 Steps. Features extracted and SVM trained. Object recognition implemented.
 
 
+    detected_objects_labels = []
+    detected_objects = []
+    for index, pts_list in enumerate(cluster_indices):
+    # Classify the clusters! (loop through each detected cluster one at a time)
+        pcl_cluster = extracted_outliers.extract(pts_list)
+        # TODO: convert the cluster from pcl to ROS using helper function
+        sample_cloud = pcl_to_ros(pcl_cluster)
+        # Extract histogram features
+        # TODO: complete this step just as is covered in capture_features.py
+        chists = compute_color_histograms(sample_cloud, using_hsv=True)
+        normals = get_normals(sample_cloud)
+        nhists = compute_normal_histograms(normals)
+        feature = np.concatenate((chists, nhists))
+        #labeled_features.append([feature, model_name])
+        # Grab the points for the cluster
+        # Compute the associated feature vector
+        # Make the prediction, retrieve the label for the result
+        # and add it to detected_objects_labels list
+        prediction = clf.predict(scaler.transform(feature.reshape(1,-1)))
+        label = encoder.inverse_transform(prediction)[0]
+        detected_objects_labels.append(label)
+        # Publish a label into RViz
+        label_pos = list(white_cloud[pts_list[0]])
+        label_pos[2] += .4
+        object_markers_pub.publish(make_label(label,label_pos, index))
+        # Add the detected object to the list of detected objects.
+        do = DetectedObject()
+        do.label = label
+        do.cloud = ros_cluster_cloud
+        detected_objects.append(do)
+
+    print(detected_objects_labels)
+    rospy.loginfo('Detected {} objects: {}'.format(len(detected_objects_labels), detected_objects_labels))
+
 
 A way to identify the objects is through color histograms and the normals. The features are obtained in the training.launch, within sensor_stick. Running the capture_features.py file, these data is obtained.
 With the data of the objects it is necessary to train it through the SVM (Support Vector Machine) learning algorithm. Running the train_svm_py script, the data obtained is trained, with the following results.
