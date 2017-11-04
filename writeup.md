@@ -142,9 +142,11 @@ A way to identify the objects is through color histograms and the normals. The f
 With the data of the objects it is necessary to train it through the SVM (Support Vector Machine) learning algorithm. Running the train_svm_py script, the data obtained is trained, with the following results.
 
 
+![alt text](https://github.com/fernandoconesa/RoboND-Perception-Project-Resolution-/blob/master/Files/1.PNG)
 
+![alt text](https://github.com/fernandoconesa/RoboND-Perception-Project-Resolution-/blob/master/Files/2.PNG)
 
-
+![alt text](https://github.com/fernandoconesa/RoboND-Perception-Project-Resolution-/blob/master/Files/3.PNG)
 
 With an accuracy over 90% in the three different “worlds” of the simulation.
 
