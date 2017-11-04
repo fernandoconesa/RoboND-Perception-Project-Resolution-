@@ -242,29 +242,51 @@ def pr2_mover(object_list):
     for i in range(0, len(object_list_param)):
         test_scene_num.data = 3
         object_name.data = object_list_param[i]['name']
+        print('245', object_name.data)
         object_group = object_list_param[i]['group']
+        print('246', object_group)
 
         for object in object_list:
-            labels.append(object.label)
-            points_arr = ros_to_pcl(object.cloud).to_array()
+            if object.label == object_list:
+                labels.append(object.label)
+                points_arr = ros_to_pcl(object.cloud).to_array()
 
-            cent = np.mean(points_arr, axis=0)[:3]
-            centroids.append(cent)
-            pick_pose.position.x = np.asscalar(cent[0])
-            pick_pose.position.y = np.asscalar(cent[1])
-            pick_pose.position.z = np.asscalar(cent[2])
+                cent = np.mean(points_arr, axis=0)[:3]
+                print('254', cent)
+                centroids.append(cent)
+                pick_pose.position.x = np.asscalar(cent[0])
+                print('256', pick_pose.position.x)
+                pick_pose.position.y = np.asscalar(cent[1])
+                print('258', pick_pose.position.y)
+                pick_pose.position.z = np.asscalar(cent[2])
+                print('259', pick_pose.position.z)
+
+            #print('pick pose position x es:', pick_pose.position.x)
 
             if object_group == 'green':
+                #print('verde')
                 arm_name.data = 'right'
-                place_pose.position.x = places_param[0]['position']
-                place_pose.position.y = places_param[1]['position']
-                place_pose.position.z = places_param[2]['position']
+                #print(arm_name.data)
+                #print (places_param)
+                place_pose.position.x = places_param[1]['position'][0]
+                #print('place pose position x es', place_pose.position.x)
+                place_pose.position.y = places_param[1]['position'][1]
+                #print('place pose position y es', place_pose.position.y)
+                place_pose.position.z = places_param[1]['position'][2]
+                #print('place pose position z es', place_pose.position.z)
 
             else:
+                #print('rojo')
                 arm_name.data = 'left'
-                place_pose.position.x = places_param[0]['position']
-                place_pose.position.y = places_param[1]['position']
-                place_pose.position.z = places_param[2]['position']
+                #print(arm_name.data)
+                #print (places_param)
+                place_pose.position.x = places_param[0]['position'][0]
+                #print('place pose position x es', place_pose.position.x)
+                place_pose.position.y = places_param[0]['position'][1]
+                #print('place pose position y es', place_pose.position.y)
+                place_pose.position.z = places_param[0]['position'][2]
+                #print('place pose position z es', place_pose.position.z)
+
 
         #for i in range(0, len(object_list_param)):
             # Populate various ROS messages
