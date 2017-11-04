@@ -158,7 +158,9 @@ The object recognition part of the code works fine, fulfilling the objectives of
 
 ![alt text](https://github.com/fernandoconesa/RoboND-Perception-Project-Resolution-/blob/master/Files/Mundo%20uno%20OK.PNG)
 
+![alt text](https://github.com/fernandoconesa/RoboND-Perception-Project-Resolution-/blob/master/Files/Mundo%20dos%20OK.PNG)
 
+![alt text](https://github.com/fernandoconesa/RoboND-Perception-Project-Resolution-/blob/master/Files/Mundo%20tres%20OK.PNG)
 
 
 In order to improve the results it could be possible to increase the numbers of samples taken in the capture_features.py script, or trying a different configuration of the cluster extraction.
