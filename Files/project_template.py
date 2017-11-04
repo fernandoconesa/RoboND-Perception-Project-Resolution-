@@ -224,12 +224,6 @@ def pcl_callback(pcl_msg):
 def pr2_mover(object_list):
 
     # TODO: Initialize variables
-    test_scene_num = Int32()
-    object_name = String()
-    object_group = String()
-    arm_name = String()
-    pick_pose = Pose()
-    place_pose = Pose()
     dict_list = []
     labels = []
     centroids = [] # to be list of tuples (x, y, z)
@@ -240,20 +234,35 @@ def pr2_mover(object_list):
 
     # TODO: Parse parameters into individual variables
     for i in range(0, len(object_list_param)):
-        test_scene_num.data = 3
+        object_name = String()
+        object_group = String()
         object_name.data = object_list_param[i]['name']
-        print('245', object_name.data)
         object_group = object_list_param[i]['group']
-        print('246', object_group)
 
-        for object in object_list:
-            if object.label == object_list:
-                labels.append(object.label)
-                points_arr = ros_to_pcl(object.cloud).to_array()
+        if object_group == 'green':
+            place_pose = Pose()
+            arm_name = String()
+            arm_name.data = 'right'
+            place_pose.position.x = places_param[1]['position'][0]
+            place_pose.position.y = places_param[1]['position'][1]
+            place_pose.position.z = places_param[1]['position'][2]
+        else:
+            place_pose = Pose()
+            arm_name = String()
+            arm_name.data = 'left'
+            place_pose.position.x = places_param[0]['position'][0]
+            place_pose.position.y = places_param[0]['position'][1]
+            place_pose.position.z = places_param[0]['position'][2]
 
+        for objec in object_list:
+            pick_pose = Pose()
+            if objec.label == object_name.data:
+                labels.append(objec.label)
+                points_arr = ros_to_pcl(objec.cloud).to_array()
                 cent = np.mean(points_arr, axis=0)[:3]
                 print('254', cent)
                 centroids.append(cent)
+                print('CENTROIDS SON...', centroids)
                 pick_pose.position.x = np.asscalar(cent[0])
                 print('256', pick_pose.position.x)
                 pick_pose.position.y = np.asscalar(cent[1])
@@ -263,31 +272,10 @@ def pr2_mover(object_list):
 
             #print('pick pose position x es:', pick_pose.position.x)
 
-            if object_group == 'green':
-                #print('verde')
-                arm_name.data = 'right'
-                #print(arm_name.data)
-                #print (places_param)
-                place_pose.position.x = places_param[1]['position'][0]
-                #print('place pose position x es', place_pose.position.x)
-                place_pose.position.y = places_param[1]['position'][1]
-                #print('place pose position y es', place_pose.position.y)
-                place_pose.position.z = places_param[1]['position'][2]
-                #print('place pose position z es', place_pose.position.z)
-
-            else:
-                #print('rojo')
-                arm_name.data = 'left'
-                #print(arm_name.data)
-                #print (places_param)
-                place_pose.position.x = places_param[0]['position'][0]
-                #print('place pose position x es', place_pose.position.x)
-                place_pose.position.y = places_param[0]['position'][1]
-                #print('place pose position y es', place_pose.position.y)
-                place_pose.position.z = places_param[0]['position'][2]
-                #print('place pose position z es', place_pose.position.z)
 
 
+        test_scene_num = Int32()
+        test_scene_num.data = 3
         #for i in range(0, len(object_list_param)):
             # Populate various ROS messages
         yaml_dict = make_yaml_dict(test_scene_num, arm_name, object_name, pick_pose, place_pose)
@@ -295,13 +283,11 @@ def pr2_mover(object_list):
 
         # Wait for 'pick_place_routine' service to come up
         rospy.wait_for_service('pick_place_routine')
-
         try:
             pick_place_routine = rospy.ServiceProxy('pick_place_routine', PickPlace)
 
             # TODO: Insert your message variables to be sent as a service request
             resp = pick_place_routine(test_scene_num, object_name, arm_name, pick_pose, place_pose)
-
             print ("Response: ",resp.success)
 
         except rospy.ServiceException, e:
