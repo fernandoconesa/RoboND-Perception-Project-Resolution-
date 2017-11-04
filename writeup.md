@@ -3,6 +3,8 @@
 
 The simulator runs a camera and its information is published in ros. In order to handle this information it is necessary to convert it to PCL
 
+    # TODO: Convert ROS msg to PCL data
+    cloud = ros_to_pcl(pcl_msg)
 
 
 With the data it is necessary to convert to a voxel grid, which must be configured with the proper size. This simplifies the information, but the correct size of the scene must be found through trial and error.
