@@ -1,4 +1,4 @@
-Exercise 1, 2 and 3 Pipeline Implemented
+# Exercise 1, 2 and 3 Pipeline Implemented
 Complete Exercise 1 steps. Pipeline for filtering and RANSAC plane fitting implemented.
 
 The simulator runs a camera and its information is published in ros. In order to handle this information it is necessary to convert it to PCL
