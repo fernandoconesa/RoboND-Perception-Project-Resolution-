@@ -167,3 +167,5 @@ The object recognition part of the code works fine, fulfilling the objectives of
 
 In order to improve the results it could be possible to increase the numbers of samples taken in the capture_features.py script, or trying a different configuration of the cluster extraction.
 
+The code is provided in the Files folder, within Scripts. I found several problems in the project. For instance the necesity of limiting the vision area in the Y axis, in order to remove a little part of the boxes that were identified by the camera as objects.
+Another one was the execution of the code for the pick and place part. For some reason, sometimes, after the recognition of several objects, it started that part of the code, so I commented it out and the output files where correctly exported.
